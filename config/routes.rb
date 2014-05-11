@@ -1,10 +1,12 @@
 Neurocare::Application.routes.draw do
-  get "static_pages/home"
-  get "static_pages/events"
-  get "static_pages/wikispaces"
-  get "static_pages/photos"
-  get "static_pages/blog"
-  get "static_pages/contact"
+  get "users/new"
+  root 'static_pages#home'
+  match '/signup', to: 'users#new', via: 'get'
+  match '/events', to: 'static_pages#events', via: 'get'
+  match '/wikispaces', to: 'static_pages#wikispaces', via: 'get'
+  match '/photos', to: 'static_pages#photos', via: 'get'
+  match '/blog', to: 'static_pages#blog', via: 'get'
+  match '/contact', to: 'static_pages#contact', via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
