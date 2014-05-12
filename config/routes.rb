@@ -1,7 +1,10 @@
 Neurocare::Application.routes.draw do
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
   root 'static_pages#home'
   match '/signup', to: 'users#new', via: 'get'
+  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/events', to: 'static_pages#events', via: 'get'
   match '/wikispaces', to: 'static_pages#wikispaces', via: 'get'
   match '/photos', to: 'static_pages#photos', via: 'get'
