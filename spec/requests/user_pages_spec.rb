@@ -39,7 +39,6 @@ describe "UserPages" do
       end
     end
   end
-
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
@@ -101,6 +100,11 @@ describe "UserPages" do
   		it "should not create a user" do
   			expect { click_button submit }.not_to change(User, :count)
   		end
+      describe "after submission" do
+        before { click_button submit }
+        it { should have_title('Sign up') }
+        it { should have_content('error') }
+      end
   	end
   	describe "with valid information" do
   		before do
@@ -128,7 +132,6 @@ describe "UserPages" do
 
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
-
     describe "forbidden attributes" do
       let(:params) do
         { user: { admin: true, password: user.password,
@@ -140,12 +143,10 @@ describe "UserPages" do
       end
       specify { expect(user.reload).not_to be_admin }
     end
-    
     before do
       sign_in user
       visit edit_user_path(user)
     end
-
     describe "page" do
       it { should have_content("Update your profile") }
       it { should have_title("Edit user") }
@@ -180,24 +181,20 @@ describe "UserPages" do
     let(:user) { FactoryGirl.create(:user) }
     let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }
-
     describe "followed users" do
       before do
         sign_in user
         visit following_user_path(user)
       end
-
       it { should have_title(full_title('Following')) }
       it { should have_selector('h3', text: 'Following') }
       it { should have_link(other_user.name, href: user_path(other_user)) }
     end
-
     describe "followers" do
       before do
         sign_in other_user
         visit followers_user_path(other_user)
       end
-
       it { should have_title(full_title('Followers')) }
       it { should have_selector('h3', text: 'Followers') }
       it { should have_link(user.name, href: user_path(user)) }

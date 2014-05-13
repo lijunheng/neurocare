@@ -2,10 +2,14 @@ require 'spec_helper'
 
 describe "StaticPages" do
   subject { page }
+  shared_examples_for "all static pages" do
+    it { should have_selector('h1', text: heading) }
+    it { should have_title(full_title(page_title)) }
+  end
   describe "Home page" do
     before { visit root_path }
-    it { should have_content('Duke Neurocare') }
-    it { should have_title(full_title('')) }
+    let(:heading) { 'Duke Neurocare' }
+    let(:page_title) { '' }
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
@@ -32,27 +36,42 @@ describe "StaticPages" do
   end
   describe "Events page" do
     before { visit events_path }
-  	it { should have_content('Events') }
-    it { should have_title(full_title('Events')) }
+  	let(:heading) { 'Events' }
+    let(:page_title) { 'Events' }
   end
   describe "Wikispaces page" do
     before { visit wikispaces_path }
-  	it { should have_content('Wikispaces') }
-    it { should have_title(full_title('Wikispaces')) }
+  	let(:heading) { 'Wikispaces' }
+    let(:page_title) { 'Wikispaces' }
   end
   describe "Photos page" do
     before { visit photos_path }
-  	it { should have_content('Photos') }
-    it { should have_title(full_title('Photos')) }
+  	let(:heading) { 'Photos' }
+    let(:page_title) { 'Photos' }
   end
   describe "Blog page" do
     before { visit blog_path }
-  	it { should have_content('Blog') }
-    it { should have_title(full_title('Blog')) }
+  	let(:heading) { 'Blog' }
+    let(:page_title) { 'Blog' }
   end
   describe "Contact page" do
     before { visit contact_path }
-  	it { should have_content('Contact') }
-    it { should have_title(full_title('Contact')) }
+  	let(:heading) { 'Contact' }
+    let(:page_title) { 'Contact' }
+  end
+  it "should have the right links on the layout" do
+    visit root_path
+    click_link "Home"
+    expect(page).to have_title(full_title(''))
+    click_link "Events", match: :first
+    expect(page).to have_title(full_title('Events'))
+    click_link "Photos"
+    expect(page).to have_title(full_title('Photos'))
+    click_link "Wikispaces"
+    expect(page).to have_title(full_title('Wikispaces'))
+    click_link "Blog", match: :first
+    expect(page).to have_title(full_title('Blog'))
+    click_link "Contact", match: :first
+    expect(page).to have_title(full_title('Contact'))
   end
 end
