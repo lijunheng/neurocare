@@ -83,7 +83,17 @@ Neurocare::Application.configure do
   config.force_ssl = true
 
   # ActionMailer settings
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => "www.neurocare.herokuapp.com" }
+  config.action_mailer.default_url_options = { :host => 'www.neurocare.herokuapp.com' }
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = 
+  {
+    :address            => 'smtp.gmail.com',
+    :port               => 587,
+    :domain             => 'gmail.com', #you can also use google.com
+    :authentication     => :plain,
+    :user_name          => 'exeusers@gmail.com',
+    :password           => '0909121209'
+  }
 end
