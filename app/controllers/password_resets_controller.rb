@@ -1,4 +1,6 @@
 class PasswordResetsController < ApplicationController
+  around_filter :catch_not_found
+
   def new
   end
 
@@ -25,6 +27,13 @@ class PasswordResetsController < ApplicationController
   end
 
   private
+
+    def catch_not_found
+      yield
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_password_reset_path, :flash => { :error => "Password reset request incorrect or expired. Please request a new password." }
+    end
+
     def user_params
       params.require(:user).permit(:password, :password_confirmation)
     end
