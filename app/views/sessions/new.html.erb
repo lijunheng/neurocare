@@ -9,6 +9,7 @@
 			<%= f.password_field :password %>
 			<%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
 		<% end %>
+		<p><%= link_to "Forgotten password?", new_password_reset_path %></p>
 		<p>New member? <%= link_to "Sign up now!", signup_path %></p>
 	</div>
 </div>

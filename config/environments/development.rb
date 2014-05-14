@@ -26,4 +26,10 @@ Neurocare::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # Do not compress assets
+  config.assets.compress = false
+
+  # ActionMailer settings
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
 end
