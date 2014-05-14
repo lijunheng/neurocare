@@ -202,6 +202,10 @@ input {
   @extend .error;
 }
 
+#search_text_field {
+  width: 25%;
+}
+
 /* Users index */
 
 .users {

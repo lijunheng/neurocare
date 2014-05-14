@@ -58,6 +58,14 @@ class User < ActiveRecord::Base
     	Micropost.from_users_followed_by(self)
     end
 
+    def self.search(search)
+	  if search
+	    find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+	  else
+	    find(:all)
+	  end
+	end
+
 	private
 
 		def create_remember_token
