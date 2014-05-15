@@ -10,4 +10,5 @@ class CreateRegistrations < ActiveRecord::Migration
     add_index :registrations, :signed_up_event_id
     add_index :registrations, [:signed_up_user_id, :signed_up_event_id], unique: true, :name => 'registration_index'
   end
+  add_index :events, [:user_id]
 end
