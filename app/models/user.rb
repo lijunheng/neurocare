@@ -1,12 +1,17 @@
 class User < ActiveRecord::Base
-	has_many :events
 	has_many :microposts, dependent: :destroy
-  	has_many :relationships, foreign_key: "follower_id", dependent: :destroy
- 	has_many :followed_users, through: :relationships, source: :followed
- 	has_many :reverse_relationships, foreign_key: "followed_id",
-                                   class_name:  "Relationship",
-                                   dependent:   :destroy
-  	has_many :followers, through: :reverse_relationships, source: :follower
+	has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+	has_many :followed_users, through: :relationships, source: :followed
+	has_many :reverse_relationships, foreign_key: "followed_id",
+								   class_name:  "Relationship",
+								   dependent:   :destroy
+	has_many :followers, through: :reverse_relationships, source: :follower
+	
+	has_many :reverse_registrations, foreign_key: "signed_up_user_id",
+		class_name: "Registration",
+		dependent: :destroy
+	has_many :signed_up_events, through: :reverse_registrations
+	
 	before_save { email.downcase! }
 	before_create :create_remember_token
 	validates :name, presence: true, length: { maximum: 50 }
@@ -42,26 +47,38 @@ class User < ActiveRecord::Base
 	end
 
 	def following?(other_user)
-    	relationships.find_by(followed_id: other_user.id)
-  	end
+		relationships.find_by(followed_id: other_user.id)
+	end
 
-  	def follow!(other_user)
-    	relationships.create!(followed_id: other_user.id)
-  	end
+	def follow!(other_user)
+		relationships.create!(followed_id: other_user.id)
+	end
 
-  	def unfollow!(other_user)
-    	relationships.find_by(followed_id: other_user.id).destroy
-  	end
+	def unfollow!(other_user)
+		relationships.find_by(followed_id: other_user.id).destroy
+	end
 
-  	def feed
-    	Micropost.from_users_followed_by(self)
-    end
+	def signedup?(event)
+		registrations.find_by(signed_up_event_id: event.id)
+	end
 
-    def self.search(search)
+	def signup!(event)
+		registrations.create!(signed_up_event_id: event.id)
+	end
+
+	def unsignup!(event)
+		registrations.find_by(signed_up_event_id: event.id).destroy
+	end
+
+	def feed
+		Micropost.from_users_followed_by(self)
+	end
+
+	def self.search(search)
 	  if search
-	    find(:all, :conditions => ['lower(name) LIKE ?', "%#{search}%".downcase])
+		find(:all, :conditions => ['lower(name) LIKE ?', "%#{search}%".downcase])
 	  else
-	    find(:all)
+		find(:all)
 	  end
 	end
 

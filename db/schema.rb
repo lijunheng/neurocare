@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140515040400) do
+ActiveRecord::Schema.define(version: 20140515141843) do
 
   create_table "events", force: true do |t|
     t.string   "content"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 20140515040400) do
   end
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
+
+  create_table "registrations", force: true do |t|
+    t.integer  "signed_up_user_id"
+    t.integer  "signed_up_event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["signed_up_event_id"], name: "index_registrations_on_signed_up_event_id"
+  add_index "registrations", ["signed_up_user_id", "signed_up_event_id"], name: "registration_index", unique: true
+  add_index "registrations", ["signed_up_user_id"], name: "index_registrations_on_signed_up_user_id"
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"

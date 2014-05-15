@@ -11,9 +11,9 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
-    @events = @user.events.paginate(page: params[:page])
+    @events = @user.signed_up_events.paginate(page: params[:page])
   end
-
+  
   def create
   	@user = User.new(user_params)
   	if @user.save
@@ -61,6 +61,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
+  end
+
+  def signed_up_events
+    @title = "Upcoming events"
+    @user = User.find(params[:id])
+    @events = @user.signed_up_events.paginate(page: params[:page])
+    render 'show_reg'
   end
 
   private

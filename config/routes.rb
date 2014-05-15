@@ -1,14 +1,19 @@
 Neurocare::Application.routes.draw do
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :signed_up_events
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :registrations, only: [:create, :destroy]
   resources :password_resets
-  resources :events
+  resources :events do
+    member do
+      get :signed_up_users
+    end
+  end
   root 'static_pages#home'
   match '/newevent', to: 'events#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'

@@ -1,0 +1,4 @@
+<%= form_for(@event.registrations.find_by(signed_up_event_id: @event.id),
+             html: { method: :delete }) do |f| %>
+  <%= f.submit "Cancel signup", class: "btn btn-large" %>
+<% end %>

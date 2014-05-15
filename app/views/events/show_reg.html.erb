@@ -13,22 +13,18 @@
 			<p><%= link_to "Edit event", edit_event_path(@event.id) %></p>
 			<p><%= link_to "Delete event", @event, method: :delete,
 	                                  data: { confirm: "You sure?" } %></p>
-	      <h1>Members signed up (<%= @event.signed_up_users.count %>)</h1>
-	        <% if @users.any? %>
-	      <ul class="users">
-	      	<% @users.each do |user| %>
-	      	<li>
-	 	 		<%= gravatar_for user, size: 52 %>
-	  			<%= link_to user.name, user %>
-	  		</li>
-	        <% end %>
-	      </ul>
-	    <% end %>
 			<% end %>
 		</section>
 	</aside>
 	<div class="span8">
-		<%= render 'signup_form' if signed_in? %>
-		<p><%= @event.content %></p>
+		<%= @event.content %>
+		<h3><%= @title %></h3>
+	    <% if @users.any? %>
+	      <ul class="users">
+	        <% @users.each do |user| %>
+	            <%= user.name %>
+	        <% end %>
+	      </ul>
+	    <% end %>
 	</div>
 </div>

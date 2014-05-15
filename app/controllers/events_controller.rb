@@ -7,7 +7,8 @@ class EventsController < ApplicationController
   end
 
   def create
-  	@event = current_user.events.build(event_params)
+  	@event = Event.create(event_params)
+    @event.user_id = current_user.id
   	if @event.save
   		flash[:success] = "Event created!"
   		redirect_to @event
@@ -22,6 +23,8 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
+    @user = current_user
+    @users = @event.signed_up_users.paginate(page: params[:page])
   end
 
   def update
@@ -40,8 +43,15 @@ class EventsController < ApplicationController
 
   def destroy
     Event.find(params[:id]).destroy
-    flash[:success] = "Event removed."
+    flash[:success] = "Event removed"
     redirect_to events_path
+  end
+
+  def signed_up_users
+    @title = "Participants"
+    @event = Event.find(params[:id])
+    @users = @event.signed_up_users.paginate(page: params[:page])
+    render 'show_reg'
   end
 
   private
