@@ -14,7 +14,7 @@ Neurocare::Application.routes.draw do
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
-  match '/events', to: 'static_pages#events', via: 'get'
+  #match '/events', to: 'static_pages#events', via: 'get'
   match '/wikispaces', to: 'static_pages#wikispaces', via: 'get'
   match '/photos', to: 'static_pages#photos', via: 'get'
   match '/blog', to: 'static_pages#blog', via: 'get'

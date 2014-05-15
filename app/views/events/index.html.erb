@@ -1,0 +1,23 @@
+<% provide(:title, 'All events') %>
+<h1>All events</h1>
+
+<%= will_paginate %>
+<%= form_tag events_path, :class => 'form-horizontal', :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search], :placeholder => 'Search...', :id => 'search_text_field' %>
+    <%= submit_tag "Search events", class: "btn btn-default btn-sm", :name => nil %>
+    <%= link_to "Create new event", new_event_path, :class => 'btn btn-default btn-sm' %>
+  </p>
+<% end %>
+<ul class="users">
+  <% @events.each do |event| %>
+  	<li>
+	  <%= link_to event.name, event %>
+	  <% if current_user.admin? && !current_user?(user) %>
+	    | <%= link_to "delete", event, method: :delete,
+	                                  data: { confirm: "You sure?" } %>
+	  <% end %>
+  	</li>
+  <% end %>
+</ul>
+<%= will_paginate %>
