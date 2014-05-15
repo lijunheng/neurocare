@@ -1,0 +1,17 @@
+<% provide(:title, @event.name) %>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+				<%= @event.name %>
+			</h1>
+		</section>
+		<section>
+			<p>Date: <%= @event.date %></p>
+			<p>Location: <%= @event.location %></p>
+		</section>
+	</aside>
+	<div class="span8">
+		<%= @event.content %>
+	</div>
+</div>
