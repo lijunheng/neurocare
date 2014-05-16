@@ -10,4 +10,11 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail :to => user.email, :subject => "Password Reset"
   end
+
+  def support_notification(sender)
+    @sender = sender
+    mail(:to => "exeusers@gmail.com",
+         :from => sender.email,
+         :subject => "New #{sender.support_type}")
+ end
 end

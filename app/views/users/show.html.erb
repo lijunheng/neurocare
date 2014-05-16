@@ -18,7 +18,10 @@
 		<h3>Events signed up (<%= @events.count %>)</h3>
 	      <ul class="users">
 	        <% @events.each do |event| %>
-	            <li><%= link_to event.name, event %></li>
+	            <li><%= link_to event.name, event %>
+	            <%= link_to event.name, event %>
+    			(Date: <%= event.date %>,
+    			Location: <%= event.location %>)</li>
 	        <% end %>
 	      </ul>
 	    <% end %>

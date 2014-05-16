@@ -1,4 +1,5 @@
 Neurocare::Application.routes.draw do
+  resources :supports, :only => [:new, :create]
   resources :users do
     member do
       get :following, :followers, :signed_up_events
