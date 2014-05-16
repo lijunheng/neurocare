@@ -13,6 +13,7 @@ class StaticPagesController < ApplicationController
   end
 
   def photos
+    @images = Dir.glob("app/assets/images/*.jpg")
   end
 
   def blog

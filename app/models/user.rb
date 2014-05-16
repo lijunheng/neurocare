@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 		self.password_reset_sent_at = Time.zone.now
 		self.password_reset_token = User.digest(User.new_remember_token)
 		save!(validate:false)
-		UserMailer.password_reset(self).deliver
+		UserMailer.password_reset(self).deliver!
 	end
 
 	def generate_token(column)

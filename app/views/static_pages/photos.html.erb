@@ -1,3 +1,5 @@
 <% provide(:title, 'Photos') %>
 <h1>Photos</h1>
-<p>Fall 2013 Photos</p>
+<% @images.each do |image| %>
+	<%= image_tag "/assets/#{image.split('/').last}", :class => 'img-thumbnail', :id => 'sized_image', :href => "/assets/#{image.split('/').last}" %>
+<% end %>
