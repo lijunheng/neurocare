@@ -13,7 +13,6 @@ $grayMediumLight: #eaeaea;
 /* universal */
 
 html {
-  overflow-y: scroll;
 }
 
 body {
@@ -70,7 +69,6 @@ p {
   margin-right: 10px;
   font-size: 1.7em;
   color: white;
-  text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
@@ -254,6 +252,23 @@ aside {
 }
 
 /* Home page */
+
+#herounit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/2048.jpg');
+  background-size: cover;
+}
+
+#text {
+  position: absolute;
+  width: 30%;
+  top: 20%;
+  right: 8%;
+}
 
 #crh {
   display: block;
