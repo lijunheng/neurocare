@@ -15,7 +15,7 @@
 	  <%= link_to event.name, event %>
     (Date: <%= event.date %>,
     Location: <%= event.location %>)
-	  <% if current_user.admin? && !current_user?(user) %>
+	  <% if current_user.admin? && !current_user?(User.find_by(id: event.user_id)) %>
 	    | <%= link_to "delete", event, method: :delete,
 	                                  data: { confirm: "You sure?" } %>
 	  <% end %>

@@ -68,6 +68,6 @@ class EventsController < ApplicationController
 
     def correct_user
       @event = Event.find(params[:id])
-      redirect_to(root_url) unless current_user?(User.find(@event.user_id))
+      redirect_to(root_url) unless current_user?(User.find(@event.user_id)) || current_user.admin?
     end
 end
